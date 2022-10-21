@@ -37,28 +37,28 @@ function optimize(data, fn) {
   data.forEach(fn);
 }
 
-let getEven = { //creo este objeto para ir guardando la lista de filtro que se han ido aplicando y derivarselo a la funcion que filtre y el resultado gurdarlo en la variable actual de valores
-
-}; // 
+let getEven = {
+  //creo este objeto para ir guardando la lista de filtro que se han ido aplicando y derivarselo a la funcion que filtre y el resultado gurdarlo en la variable actual de valores
+}; //
 function filter(fn, value) {
-  let eve = events; // consulto la lista de eventos 
-
- getEven[fn] = value // todos los filtros que se haya usado en anteirores veces, los guardo en el objeto getEvent , 
-
- for(let name in getEven){ // Recoroo toda la lista de  filtro . Por cada filtro que este en la lista de filtros aplicados decido
-
-  if (name  == `filtrado`) { // si el nombre de la funcion es igual a  'filtrado'
-    eve = eve.filter(element => element.category.toLowerCase().includes(getEven[name].toLowerCase())) //ejecuta este filtro, verificando si la categoria incluye de este filtro getEven[name]
+  let eve = events; // consulto la lista de eventos
+  getEven[fn] = value; // todos los filtros que se haya usado en anteirores veces, los guardo en el objeto getEvent ,
+  for (let name in getEven) {
+    // Recorro toda la lista de  filtro . Por cada filtro que este en la lista de filtros aplicados decido
+    if (name == `filtrado`) {
+      // si el nombre de la funcion es igual a  'filtrado'
+      eve = eve.filter((element) =>
+        element.category.toLowerCase().includes(getEven[name].toLowerCase())
+      ); //ejecuta este filtro, verificando si la categoria incluye de este filtro getEven[name]
+    }
+    if (name == `filtrar`) {
+      eve = eve.filter((element) =>
+        element.name.toLowerCase().includes(getEven[name].toLowerCase())
+      );
+    }
   }
-  
-  if (name == `filtrar`) { //input
-    eve = eve.filter( element => element.name.toLowerCase().includes(getEven[name].toLowerCase()))
-  }
- }
- return eve;
-} // si se aplico este filtro  voy hacer otra busqueda tomando el valor que tenga definido para esa busqueda 
-
-
+  return eve;
+} // si se aplico este filtro  voy hacer otra busqueda tomando el valor que tenga definido para esa busqueda
 
 // 1. Creo el escuchador de eventos, que el evento sea un input(ingreso por teclado) 2. Vacio el contenedor donde estan mis cards 3.filtro y hago la comparacion en el filtro 4. creo un nuevo for each donde recorro la variable del filtro
 
@@ -66,36 +66,30 @@ searchs.addEventListener(`input`, (event) => {
   console.log(event.target.value);
   contenedorGeneral.innerHTML = "";
 
-  textSearch = event.target.value;
-
   eve = filter(`filtrar`, event.target.value);
 
   optimize(eve, addCards);
 });
 
 // _____CHECKBOX__________-
-// 1.Recorro events con un map, relaciono las categorias, hago un reduce sobre lo mapeado poniendo como valor inicial un array vacio, lo concateno en un solo array , creo un set para eliminr lo elementos repetidos
+// 1. Creo un set para eliminar las categorias repetidas y a su vez en este voy mapeando sobre cada una de ellas
+//2. creo una copia del set
 
-let newEve = events.map((evento) => evento.category);
-
-let newEvent = newEve.reduce((a, b) => a.concat(b), []).sort();
-
-console.log(newEvent);
-newEvent = new Set([...newEvent]);
-console.log(newEvent);
+let newEve = new Set(events.map((evento) => evento.category));
+newEve = [...newEve];
 
 // Creo un funncion para las categorias para imprimirla dinamicamente, y luego las recorro con un for each para imprimirlas , poninendo como array el creado con el set
 
-function addCheck(categoryE) {
+function addCheck(element) {
   check.innerHTML += `
   <div class="form-check form-switch  ps-5">
-  <input class="form-check-input" type="checkbox"  value= "${categoryE}" role="switch" id="flexSwitchCheckDefault" style="background-color:  #550053">
-<label class="form-check-label" for="flexSwitchCheckDefault">${categoryE}</label>
+  <input class="form-check-input" type="checkbox"  value= "${element}" role="switch" id="flexSwitchCheckDefault" style="background-color:  #550053">
+<label class="form-check-label" for="flexSwitchCheckDefault">${element}</label>
 </div>
   `;
 }
 
-newEvent.forEach((element) => {
+newEve.forEach((element) => {
   addCheck(element);
 });
 
@@ -105,7 +99,6 @@ let checkboxC = [];
 check.addEventListener("change", (event) => {
   contenedorGeneral.innerHTML = "";
   if (event.target.checked) {
-   
     eve = filter(`filtrado`, event.target.value);
     checkboxC = checkboxC.concat(eve);
     optimize(checkboxC, addCards);
@@ -127,4 +120,3 @@ check.addEventListener("change", (event) => {
     }
   }
 });
-

@@ -73,18 +73,11 @@ searchs.addEventListener(`input`, (event) => {
 
 });
 // _____CHECKBOX__________-
-// 1.Recorro events con un map, relaciono las categorias, hago un reduce sobre lo mapeado poniendo como valor inicial un array vacio, lo concateno en un solo array , creo un set para eliminr lo elementos repetidos
+// 1. Creo un set para eliminar las categorias repetidas y a su vez en este voy mapeando sobre cada una de ellas
+//2. creo una copia del set
 
-
-let newEve = events.map((evento) => evento.category);
-
-let newEvent = newEve
-  .reduce((a, b) =>  a.concat(b), [])
-  .sort();
-  
-console.log(newEvent);
-newEvent = new Set([...newEvent]);
-console.log(newEvent);
+let newEve = new Set(events.map((evento) => evento.category));
+newEve = [...newEve]
 
 // Creo un funncion para las categorias para imprimirla dinamicamente, y luego las recorro con un for each para imprimirlas , poninendo como array el creado con el set
 
@@ -97,7 +90,7 @@ function addCheck(categoryE) {
   `;
 }
 
-newEvent.forEach((element) => {
+newEve.forEach((element) => {
   addCheck(element);
 });
 
