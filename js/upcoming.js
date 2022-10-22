@@ -1,12 +1,11 @@
-
-  let contenedorGeneral = document.getElementById("containerD")
-  let searchs = document.getElementById("search");
+let contenedorGeneral = document.getElementById("containerD");
+let searchs = document.getElementById("search");
 let check = document.getElementById("check");
 
-  let upcoming = events.filter(event => event.date > currentDate)
-  function addCards(array){
-       array.forEach((element)=> {
-      contenedorGeneral.innerHTML += `
+let upcoming = events.filter((event) => event.date > currentDate);
+function addCards(array) {
+  array.forEach((element) => {
+    contenedorGeneral.innerHTML += `
       <div class="col-md-1  pb-5  container-fluid "  style="width: 20rem; background-color: #ffccfe; "  >
         <div class="card" style="background-color: #550053; " >
             <img src="${element.image}"
@@ -27,16 +26,15 @@ let check = document.getElementById("check");
               </div>
             </div>
    
-            `
-          });
-  }
-  
- addCards(upcoming)
+            `;
+  });
+}
 
+addCards(upcoming);
 
- searchs.addEventListener(`input`, () => {
+searchs.addEventListener(`input`, () => {
   contenedorGeneral.innerHTML = "";
-  let arrayPorCategoria = filtradoPorCategoria(upcoming)
+  let arrayPorCategoria = filtradoPorCategoria(upcoming);
   let arrayPorTexto = buscarTexto(search.value, arrayPorCategoria);
   addCards(arrayPorTexto);
 });
@@ -66,20 +64,21 @@ printCheck(newEve);
 
 check.addEventListener("change", () => {
   contenedorGeneral.innerHTML = "";
-  let arrayTexto = buscarTexto(search.value, upcoming)
-  let arrayChecked = filtradoPorCategoria(arrayTexto)
-  addCards(arrayChecked)
-  
+  let arrayTexto = buscarTexto(search.value, upcoming);
+  let arrayChecked = filtradoPorCategoria(arrayTexto);
+  addCards(arrayChecked);
 });
 
-function filtradoPorCategoria(arrayD){
-  let checkboxes = document.querySelectorAll("input[type = 'checkbox']")
-  let arrayChecks = Array.from(checkboxes)
-  let checksAzules = arrayChecks.filter(check => check.checked)
-  let categories = checksAzules.map(checkAzul => checkAzul.value) 
-  if(categories.length > 0){
-  let arrayFiltrado = arrayD.filter(element => categories.includes(element.category))
-  return arrayFiltrado
-}
-return arrayD
+function filtradoPorCategoria(arrayD) {
+  let checkboxes = document.querySelectorAll("input[type = 'checkbox']");
+  let arrayChecks = Array.from(checkboxes);
+  let checksAzules = arrayChecks.filter((check) => check.checked);
+  let categories = checksAzules.map((checkAzul) => checkAzul.value);
+  if (categories.length > 0) {
+    let arrayFiltrado = arrayD.filter((element) =>
+      categories.includes(element.category)
+    );
+    return arrayFiltrado;
+  }
+  return arrayD;
 }
