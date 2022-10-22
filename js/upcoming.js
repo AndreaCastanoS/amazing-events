@@ -22,7 +22,7 @@ let check = document.getElementById("check");
                     <p class="text-white"> ${array.price}</p>
                   <div class="d-grid gap-2 d-md-flex justify-content-md-end">
                   
-                    <a href = "../details.html?id=${array._id}" class="btn   btn btn-outline-dark" type="button" style="background-color: #ffccfe;">View More</a>
+                    <a href = "./details.html?id=${array._id}" class="btn   btn btn-outline-dark" type="button" style="background-color: #ffccfe;">View More</a>
                    </div>
                 </div>
                 </div>
