@@ -2,7 +2,6 @@
     let captur = location.search
     let cap= new URLSearchParams(captur)
     let otherId = parseInt(cap.get("id")) //convierto a un entero
-    console.log(otherId)
     let element = events.find((element) => element._id === otherId)
     
     let detailsC = document.getElementById("details")
