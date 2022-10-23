@@ -1,5 +1,3 @@
-console.log(events);
-
 let contenedorGeneral = document.getElementById("containerD");
 let searchs = document.getElementById("search");
 let check = document.getElementById("check");
@@ -29,24 +27,14 @@ function addCards(array) {
   });
 }
 
-addCards(events);
-
-searchs.addEventListener(`input`, () => {
-  contenedorGeneral.innerHTML = "";
-  let arrayPorCategoria = filtradoPorCategoria(events)
-  let arrayPorTexto = buscarTexto(search.value, arrayPorCategoria);
-  addCards(arrayPorTexto);
-});
 
 function buscarTexto(texto, arrayDatos) {
   let arrayFiltr = arrayDatos.filter((element) =>
     element.name.toLowerCase().includes(texto.toLowerCase())
   );
   return arrayFiltr;
-}
+} 
 
-let newEve = new Set(events.map((evento) => evento.category));
-newEve = [...newEve];
 
 function printCheck(arrayCheck) {
   arrayCheck.forEach((element) => {
@@ -59,15 +47,7 @@ function printCheck(arrayCheck) {
   });
 }
 
-printCheck(newEve);
-
-check.addEventListener("change", () => {
-  contenedorGeneral.innerHTML = "";
-  let arrayTexto = buscarTexto(search.value, events)
-  let arrayChecked = filtradoPorCategoria(arrayTexto)
-  addCards(arrayChecked)
-  
-});
+ 
 
 function filtradoPorCategoria(arrayD){
   let checkboxes = document.querySelectorAll("input[type = 'checkbox']")
@@ -79,20 +59,44 @@ function filtradoPorCategoria(arrayD){
   return arrayFiltrado
 }
 return arrayD
-}
+}  
+
+async function capture() {
+  try {
+    let api = await fetch(`https://mind-hub.up.railway.app/amazing`);
+    let data = await api.json();
+    let events = data.events;
+    console.log(events);
+    let currentDate = data.date;
+    console.log(currentDate);
+
+    addCards(events);
+
+    let newEve = new Set(events.map((evento) => evento.category));
+    newEve = [...newEve];
+
+    printCheck(newEve);
+
+    searchs.addEventListener(`input`, () => {
+      contenedorGeneral.innerHTML = "";
+      let arrayPorCategoria = filtradoPorCategoria(events)
+      let arrayPorTexto = buscarTexto(search.value, arrayPorCategoria);
+      addCards(arrayPorTexto);
+    });
+
+    check.addEventListener("change", () => {
+      contenedorGeneral.innerHTML = "";
+      let arrayTexto = buscarTexto(search.value, events)
+      let arrayChecked = filtradoPorCategoria(arrayTexto)
+      addCards(arrayChecked)
+      
+    });
 
 
 
+  } catch (error) {
+    console.log("hubo en error y no te pude mandar nada");
+  }
+} 
 
-
-
-
-
-
-
-
-
-
-
-
-
+capture();
