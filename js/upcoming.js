@@ -18,7 +18,7 @@ function addCards(array) {
                   <div  class="d-flex justify-content-between">
                     <p class="text-white">$${element.price}</p>
                   <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                  <a href = "./details.html?id=${element._id}" class="btn   btn btn-outline-dark" type="button" style="background-color: #ffccfe;">View More</a>
+                  <a href = "./details.html?id=${element.id}" class="btn   btn btn-outline-dark" type="button" style="background-color: #ffccfe;">View More</a>
                    </div>
                 </div>
                 </div>
