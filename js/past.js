@@ -16,7 +16,7 @@ function addCards(array) {
               <h5 class="card-title text-white" >${element.name}</h5>
                 <p class="card-text text-white" style="height:4rem">${element.description}</p>
                 <div  class="d-flex justify-content-between">
-                  <p class="text-white"> ${element.price}</p>
+                  <p class="text-white">$${element.price}</p>
                 <div class="d-grid gap-2 d-md-flex justify-content-md-end">
                  <a href = "./details.html?id=${element._id}" class="btn   btn btn-outline-dark" type="button" style="background-color: #ffccfe;">View More</a>
                 </div>
