@@ -6,24 +6,25 @@ function addCards(array) {
   array.forEach((element) => {
     contenedorGeneral.innerHTML += `
     <div class="col-md-1  pb-5  container-fluid "  style="width: 21rem; background-color: #ffccfe; "  >
-      <div class="card" style="background-color: #550053; " >
-          <img src="${element.image}"
-              height="171"
-               alt="${element.name}" >
-              <div class="card-body" >
-                <h4 class= "d-flex justify-content-md-center  rounded-5" style="background-color: #ffccfe; color: #550053; " >${element.category}</h4> 
-                <h5 class="card-title text-white" >${element.name}</h5>
-                // <p class="card-text text-white" style="height:7rem">${element.description}</p>
-                <div  class="d-flex justify-content-between">
-                  <p class="text-white"> $${element.price}</p>
-                <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                <a href = "./details.html?id=${element._id}" class="btn   btn btn-outline-dark" type="button" style="background-color: #ffccfe;">View More</a>
-                 </div>
-              </div>
+    <div class="card" style="background-color: #550053; " >
+        <img src="${element.image}"
+            height="171"
+             alt="${element.name}" >
+            <div class="card-body" >
+            <h4 class= "d-flex justify-content-md-center rounded-5" style="background-color: #ffccfe; color: #550053; " >${element.category}</h4> 
+            <h5 class="card-title text-white" >${element.name}</h5>
+              <p class="card-text text-white" style="height:6.5rem">${element.description}</p>
+              <div  class="d-flex justify-content-between">
+                <p class="text-white">$${element.price}</p>
+              <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+               <a href = "./details.html?id=${element._id}" class="btn   btn btn-outline-dark" type="button" style="background-color: #ffccfe;">View More</a>
               </div>
             </div>
+            </div>
           </div>
-          `;
+        </div>
+
+        `;
   });
 }
 
