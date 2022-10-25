@@ -3,7 +3,7 @@ let detailsC = document.getElementById("details");
 async function getId() {
   let id = location.search.slice(4);
   console.log(id);
-  let result = await fetch(`https://mind-hub.up.railway.app/amazing/${id}`);
+  let result = await fetch(`https://mh-amazing.herokuapp.com/amazing/${id}`);
   console.log(result);
   let resultApi = await result.json();
   console.log(resultApi);
