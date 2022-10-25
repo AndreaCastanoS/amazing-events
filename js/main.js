@@ -64,7 +64,7 @@ return arrayD
 
 async function capture() {
   try {
-    let api = await fetch(`https://mind-hub.up.railway.app/amazing`);
+    let api = await fetch(` https://mh-amazing.herokuapp.com/amazing`);
     let data = await api.json();
     let events = data.events;
     console.log(events);
