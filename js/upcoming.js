@@ -63,11 +63,12 @@ function filtradoPorCategoria(arrayD) {
 
 async function capture() {
   try {
-    let api = await fetch(`https://mind-hub.up.railway.app/amazing`);
+    let api = await fetch(`https://mh-amazing.herokuapp.com/amazing`);
     let data = await api.json();
     let events = data.events;
     console.log(events);
     let currentDate = data.date;
+    console.log(currentDate);
     let upcoming = events.filter((event) => event.date > currentDate);
     console.log(upcoming);
 
