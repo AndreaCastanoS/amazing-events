@@ -2,11 +2,10 @@ let contenedorGeneral = document.getElementById("containerD");
 let searchs = document.getElementById("search");
 let check = document.getElementById("check");
 
-let past = events.filter((event) => event.date < currentDate);
 function addCards(array) {
   array.forEach((element) => {
     contenedorGeneral.innerHTML += `
- <div class="col-md-1  pb-5  container-fluid "  style="width: 20rem; background-color: #ffccfe; "  >
+ <div class="col-md-1  pb-5  container-fluid "  style="width: 21rem; background-color: #ffccfe; "  >
       <div class="card" style="background-color: #550053; " >
           <img src="${element.image}"
               height="171"
@@ -14,11 +13,11 @@ function addCards(array) {
               <div class="card-body" >
               <h4 class= "d-flex justify-content-md-center rounded-5" style="background-color: #ffccfe; color: #550053; " >${element.category}</h4> 
               <h5 class="card-title text-white" >${element.name}</h5>
-                <p class="card-text text-white" style="height:4rem">${element.description}</p>
+                <p class="card-text text-white" style="height:6.5rem">${element.description}</p>
                 <div  class="d-flex justify-content-between">
-                  <p class="text-white"> ${element.price}</p>
+                  <p class="text-white">$${element.price}</p>
                 <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                 <a href = "./details.html?id=${element._id}" class="btn   btn btn-outline-dark" type="button" style="background-color: #ffccfe;">View More</a>
+                 <a href = "./details.html?id=${element.id}" class="btn   btn btn-outline-dark" type="button" style="background-color: #ffccfe;">View More</a>
                 </div>
               </div>
               </div>
@@ -29,24 +28,12 @@ function addCards(array) {
   });
 }
 
-addCards(past);
-
-searchs.addEventListener(`input`, () => {
-  contenedorGeneral.innerHTML = "";
-  let arrayPorCategoria = filtradoPorCategoria(past);
-  let arrayPorTexto = buscarTexto(search.value, arrayPorCategoria);
-  addCards(arrayPorTexto);
-});
-
 function buscarTexto(texto, arrayDatos) {
   let arrayFiltr = arrayDatos.filter((element) =>
     element.name.toLowerCase().includes(texto.toLowerCase())
   );
   return arrayFiltr;
 }
-
-let newEve = new Set(events.map((evento) => evento.category));
-newEve = [...newEve];
 
 function printCheck(arrayCheck) {
   arrayCheck.forEach((element) => {
@@ -58,15 +45,6 @@ function printCheck(arrayCheck) {
         `;
   });
 }
-
-printCheck(newEve);
-
-check.addEventListener("change", () => {
-  contenedorGeneral.innerHTML = "";
-  let arrayTexto = buscarTexto(search.value, past);
-  let arrayChecked = filtradoPorCategoria(arrayTexto);
-  addCards(arrayChecked);
-});
 
 function filtradoPorCategoria(arrayD) {
   let checkboxes = document.querySelectorAll("input[type = 'checkbox']");
@@ -81,3 +59,40 @@ function filtradoPorCategoria(arrayD) {
   }
   return arrayD;
 }
+
+async function capture() {
+  try {
+    let api = await fetch(`https://mh-amazing.herokuapp.com/amazing`);
+    let data = await api.json();
+    let events = data.events;
+    console.log(events);
+    let currentDate = data.date;
+    let past = events.filter((event) => event.date < currentDate);
+    console.log(past);
+
+    addCards(past);
+
+    let newEve = new Set(events.map((evento) => evento.category));
+    newEve = [...newEve];
+
+    printCheck(newEve);
+
+    searchs.addEventListener(`input`, () => {
+      contenedorGeneral.innerHTML = "";
+      let arrayPorCategoria = filtradoPorCategoria(past);
+      let arrayPorTexto = buscarTexto(search.value, arrayPorCategoria);
+      addCards(arrayPorTexto);
+    });
+
+    check.addEventListener("change", () => {
+      contenedorGeneral.innerHTML = "";
+      let arrayTexto = buscarTexto(search.value, past);
+      let arrayChecked = filtradoPorCategoria(arrayTexto);
+      addCards(arrayChecked);
+    });
+  } catch (error) {
+    console.log("hubo en error y no te pude mandar nada");
+  }
+}
+
+capture();
